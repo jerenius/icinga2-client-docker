@@ -10,18 +10,18 @@ This image is quite useless without the master.
 For the master node check out [my repository](https://github.com/jerenius/icinga2) or source of 
 my inspiration, [jjethwa's icinga2 docker image](https://github.com/jjethwa/icinga2).
 
-Usage:
-and use the value for ICINGA2_TICKET_SALT -option. Installation ticket could actually be obtained within
-the autoconfiguration process via Icinga2 Api, but I didn't get curl and JSON play nicely with with variables
-yet. Working on it, when I have the time and inspiration. This workaround is easy enough for now.
 
-Start your Icinga2 -container with command:
-docker run --hostname CLIENT_NAME --name CLIENT_NAME \
+At the client-side you need to setup few variables;
+MASTER_HOST
+MASTER_IP
+CLIENT_HOST
+API_USER
+API_PWD
 
-You also need to 
--e ICINGA2_MASTER_HOST=<YOUR_MASTER> -e ICINGA2_CLIENT_FQDN=<CLIENT_NAME> \
--e ICINGA2_TICKET_SALT=4b723a43889df16fd0834e1122ee11d7579aa729 \
---add-host="<YOUR_MASTER>:<YOUR_MASTER_IP>" \
--p 5665:5665 -t jerenius/icinga2-client:latest
+Startup script request a install ticket from master via API, and configures
+icinga2 -client automatically.
 
-and let the magic of autoconfiguration happen.
+At the master-side you need to configure zone and endpoint -objects for the client.
+
+At the moment this container image only support one satellite per zone. I might
+change that in the future.
