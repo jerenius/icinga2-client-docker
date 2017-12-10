@@ -12,9 +12,11 @@ RUN apt-get update \
        apt-utils \
        ca-certificates \
        cron \
+       curl \
        debian-keyring \
        ethtool \
        gnupg \
+       logrotate \
        nano \
        net-tools \
        procps \

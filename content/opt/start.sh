@@ -13,6 +13,11 @@ chown nagios.nagios /etc/icinga2 -R
 
 rm -rf /etc/icinga2/conf.d/*
 
+echo "curl -k -s -u $API_USER:$API_PWD -H 'Accept: application/json' -X POST \"https://$MASTER_IP:5665/v1/actions/generate-ticket\" -d '{ \"cn\": \"$CLIENT_HOST\" }'">/opt/ticket.sh
+
+ICINGA_TICKET=`sh /opt/ticket.sh | awk -F\" '{print $12}'`
+
+
 icinga2 pki new-cert --cn $CLIENT_HOST --key $PKI_DIR/$CLIENT_HOST.key --cert $PKI_DIR/$CLIENT_HOST.crt
 icinga2 pki save-cert --key $PKI_DIR/$CLIENT_HOST.key --cert $PKI_DIR/$CLIENT_HOST.crt --trustedcert $PKI_DIR/trusted-cert.crt --host $MASTER_HOST
 icinga2 node setup --ticket $ICINGA_TICKET --zone $CLIENT_HOST --master_host $MASTER_HOST  --trustedcert  $PKI_DIR/trusted-cert.crt  --cn $CLIENT_HOST  --endpoint $MASTER_HOST,$MASTER_IP,5665 --accept-commands --accept-config
