@@ -1,0 +1,13 @@
+version: '2'
+services:
+  icinga2:
+    image: icinga2-client-docker
+    container_name: icinga2
+    restart: on-failure:5
+    hostname: kicinga2-client-1
+    environment:
+      - MASTER_HOST=icinga2
+      - MASTER_IP=192.168.255.254
+      - CLIENT_HOST=icinga2-client-1
+      - API_USER=root
+      - API_PWD=47F81dg407e9c465
