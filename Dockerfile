@@ -19,6 +19,7 @@ RUN apt-get update \
        logrotate \
        nano \
        net-tools \
+       nmap \
        procps \
        smartmontools \
        snmp \
